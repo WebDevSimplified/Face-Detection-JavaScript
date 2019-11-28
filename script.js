@@ -8,14 +8,13 @@ Promise.all([
 ]).then(startVideo)
 
 function startVideo() {
-  navigator.getUserMedia(
-    { video: {} },
-    stream => video.srcObject = stream,
-    err => console.error(err)
-  )
+  navigator.mediaDevices.
+  getUserMedia({video: {}}) 
+    .then((stream)=> {video.srcObject = stream;}, 
+          (err)=> console.error(err));
 }
 
-video.addEventListener('play', () => {
+video.onplaying = function () {
   const canvas = faceapi.createCanvasFromMedia(video)
   document.body.append(canvas)
   const displaySize = { width: video.width, height: video.height }
@@ -28,4 +27,4 @@ video.addEventListener('play', () => {
     faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
   }, 100)
-})
+}
