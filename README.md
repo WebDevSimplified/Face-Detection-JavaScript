@@ -1,3 +1,9 @@
+#About:
+In this project you are able to get the codes required 
+for face detection uaing Javascript. The codes are also 
+written neatly and cleanly comments are also used to make 
+understanding easy.
+
 # IMPORTANT: Bug Fixes
 
 ## `navigator.getUserMedia`
