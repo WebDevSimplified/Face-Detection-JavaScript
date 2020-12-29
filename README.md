@@ -1,8 +1,15 @@
+!['images'](https://source.unsplash.com/1600x900/?coding,JavaScript)
 # IMPORTANT: Bug Fixes
 
 ## `navigator.getUserMedia`
 
-`navigator.getUserMedia` is now deprecated and is replaced by `navigator.mediaDevices.getUserMedia`. To fix this bug replace all versions of `navigator.getUserMedia` with `navigator.mediaDevices.getUserMedia`
+```javaSceipt
+navigator.getUserMedia````  
+is now deprecated and is replaced by 
+```javaScript 
+navigator.mediaDevices.getUserMedia
+```
+. To fix this bug replace all versions of `navigator.getUserMedia` with `navigator.mediaDevices.getUserMedia`
 
 ## Low-end Devices Bug
 
