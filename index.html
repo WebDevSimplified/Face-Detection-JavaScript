@@ -4,26 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.scss">
   <title>Document</title>
-  <script defer src="face-api.min.js"></script>
-  <script defer src="script.js"></script>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    canvas {
-      position: absolute;
-    }
-  </style>
 </head>
 <body>
-  <video id="video" width="720" height="560" autoplay muted></video>
+  <div class="background" id="bck">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+ 
+    <nav>
+      <p class="heading">Face<span class="navHeading">.exe</span></p>
+      <input type="checkbox" class="checkbox" id="chk" />
+      <label class="label" for="chk">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+          <div class="ball"></div>
+      </label>
+    </nav>
+    <div id="face">
+      <video id="video" width="720"  autoplay muted></video>
+    </div>
+  </div>
+  <script defer src="js/face-api.min.js"></script>
+  <script defer src="js/script.js"></script>
+  <script src="https://kit.fontawesome.com/da4c88c6a6.js" crossorigin="anonymous"></script>
 </body>
 </html>
