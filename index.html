@@ -27,3 +27,145 @@
   <video id="video" width="720" height="560" autoplay muted></video>
 </body>
 </html>
+
+const video = document.getElementById('video')
+
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+]).then(startVideo)
+
+function startVideo() {
+  navigator.getUserMedia(
+    { video: {} },
+    stream => video.srcObject = stream,
+    err => console.error(err)
+  )
+}
+
+video.addEventListener('play', () => {
+  const canvas = faceapi.createCanvasFromMedia(video)
+  document.body.append(canvas)
+  const displaySize = { width: video.width, height: video.height }
+  faceapi.matchDimensions(canvas, displaySize)
+  setInterval(async () => {
+    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    const resizedDetections = faceapi.resizeResults(detections, displaySize)
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    faceapi.draw.drawDetections(canvas, resizedDetections)
+    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+    faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
+  }, 100)
+}) make complete project in this code
+Complete Face Detection Project
+Here's a complete face detection project using face-api.js with HTML, CSS, and JavaScript all in one file:
+
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Face Detection with face-api.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      position: relative;
+      margin: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    video {
+      display: block;
+      background: #000;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #4267B2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #365899;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+    }
+
+    h1 {
+      color: #4267B2;
+      margin-bottom: 10px;
+    }
+
+    .stats {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Face Detection Demo</h1>
+  <p>Real-time face detection with expressions and landmarks</p>
+  
+  <div class="container">
+    <video id="video" width="720" height="560" autoplay muted></video>
+    <div id="loading" class="loading">Loading models...</div>
+  </div>
+  
+  <div class="stats" id="stats">
+    No faces detected
+  </div>
+  
+  <div class="controls">
+    <button id="startBtn">Start Camera</button>
+    <button id="stopBtn" disabled>Stop Camera</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
